@@ -259,6 +259,161 @@ errorBuilder: (context, error, stackTrace) => const Icon(Icons.abc_outlined),
 ```
 - Text() içindeki metne sağ tıklayıp ``extract local variable`` yapıp ayırabiliriz.Onu da yukarı at. karmaşık gözükmesin.
 
+- ``with`` ile utility ekleme yontemi ve ``styleFrom`` ``primary`` ve ``shape`` özellikleri
+  - birden fazla kez kullanılabilecek bir buton benzer özelliklerdeyse aynı ozellikleri belirlenir. Değişken özellikleri de kendimiz ekleriz.
+  -`` final void Function() onPressed;`` ile butonun basılması durumunda ne olacağını belirleriz. void callbakc function.
+
+```dart	 
+// ornek Utility ekleme yöntemi
+class CustomFootButton extends StatelessWidget with _ColorsUtility, _PaddingUtility //<<< with _ColorsUtility, _PaddingUtility 
+{
+  CustomFootButton({Key? key, required this.title, required this.onPressed}) : super(key: key);//<<< required this.onPressed
+  final String title;
+  final void Function() onPressed;
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+        style: ElevatedButton.styleFrom(primary: redColor, shape: const StadiumBorder()),//<<<
+        onPressed: onPressed,
+        child: Padding(
+          padding: normal2xPadding,
+          child: Text(
+            title,
+            style: Theme.of(context).textTheme.subtitle2?.copyWith(color: white, fontWeight: FontWeight.bold),//<<< white
+          ),
+        ));
+  }
+}
+class _ColorsUtility {
+  final Color redColor = Colors.red;
+  final Color white = Colors.white;
+}
+class _PaddingUtility {
+  final EdgeInsets normalPadding = const EdgeInsets.all(8.0);
+  final EdgeInsets normal2xPadding = const EdgeInsets.all(16.0);
+}
+```	
+- indikator eklemek için ``CircularProgressindicator`` kullanabilirsin , yine ``themeData`` üzerinden ``progressindicatortheme`` ile kişiselleştirebilirsin.
+- ``listtile`` da twitterda postlar altalta ya onun gibi. özellikleri , title subtitle leading trailing bir de buradaki özelliklere istediğin widgeti ekleebilirsin yani title a image vs. ``listTileTheme`` ile de tema oluşturabilirsin.
+- heryerde kullabileceğin componentleri ``core`` klasöründe , projeye özel olanları da ``product`` klasöründe tut.
+- required kısmında eğer veri gelmezse varsayılan değer atamak için{ ... ,``this.degisken= deger``} sekline yapabilirsin.
+- girilen height bilgisi de aynı sekilde classlarda tutulabilir.
+- stack te positioned kullanarak childlerin yerini ayarlayabilirsin.  positioned.fill ile de childin tamamını kaplayabilirsin. altına bir positioned daha atarsan alttaki üstte gözükür.
+- statelessswidget a sağ tıklayıp statefulwidget yapabalirsin.
+- widgeta sağ tıklayıp ``extract widget`` yaparsan ayrı bir widget oluşturur. _ koy basa 
+- benzer kodları olabildiğince birleştirmeyi dene
+- setstatei kullandığın widgetin güncellemesi kendisiyle sınırlı olsun ekranı yenilemesin.Bunun için ``product `` a orn counterbutton eklersin orda widgeti yazarsn
+- HER PROJEDE STRINGLERI KULLANIRSIN GENELDE BU YUZDEN PRODUCT KLASÖRÜNE ``language`` klasörü EKLE içine de language_items.dart oluştur. orda tüm stringleri tut.
+ornek:
+```dart
+class LanguageItems {
+  static const welcomeTitle = "Merhaba";
+  static const mailTitle = "Mail";
+}
+```
+-PageView ile sayfalar arası geçiş sağa sola kaydırarak (default sağ sol)yukarı aşağı kaydırarak  yapabilirsin. PageView.builder ile de sayfa sayısını belirleyebilirsin.
+  - ornek ozellikler controller : PageController (viewPortFraction: 0.8, initialPage: 1, keepPage: true, pageSnapping: true, reverse: false,)
+  - baska widget ile pageview controllerine etkimek için ``final PageController _pageController = PageController();  _pageController.jumpToPage(1); `` gibi kullanabilirsin.
+
+ornek
+```dart
+PageView(
+        children: [
+          //burada direct yaptığın scaffoldlu sayfaları da koyarsın widgetleri de
+          Container(
+            color: Colors.red,
+            child: Center(child: Text("1")),
+          ),
+          Container(
+            color: Colors.blue,
+            child: Center(child: Text("2")),
+          ),
+        ],
+)
+PageView.builder(
+        itemCount: 3,
+        itemBuilder: (context, index) {
+          return Container(
+            color: Colors.red,
+            child: Center(child: Text(index.toString())),
+          );
+        },
+      ),
+```
+
+- widget  keylerin orda`` {.., required this.metin}`` yaparsan altında da ``final String message`` koyarsa stateful widget kısmında metine erşimek için ``widget.metin`` şeklinde kullanabilirsin.
+- initState widgetin constructorudur .Widget daha cizilmeden önce çalışır.
+-final değeri atayamazsan late eklemen lazım initstate gibi constructorda atancaksa
+- `didChanhgeDependencies` initstateden sonra , widgetin build metodu çalışmadan önce çalışır.
+ornek
+```dart
+ @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    print('c');
+  }
+``` 
+- `dispose()` widgetin ömrü bittiğinde çalışır. kullanılan controllerlar burada dispose edilir.
+ornek
+```dart
+ @override
+  void dispose() {
+    super.dispose();
+    print('d');
+  }
+```
+
+-textfield a decoration eklemek için ornek  ``decoration: InputDecoration(hintText: "hint", labelText: "label", border: OutlineInputBorder(),)`` şeklinde  ya da yapabilirsin.
+-Metin uzunluğuna göre rengi değişen kutu BuildCounter ile yapılabilir. 
+```dart
+buildCounter: (BuildContext context, {int? currentLength, bool? isFocused, int? maxLength}) {
+                return _animatedContainer(currentLength);
+              },
+              ///...
+_animatedContainer(
+  //..
+     color: Colors.green[100*(currentlength??0)],
+  //..
+    ),
+```
+-AnimatedContainer ile animasyonlu container oluşturabilirsin. geçiş hoş olur vs
+-keyboard type mail num vs ayarla işe yarar.  MİMMAX LİNE VS DE EKLEYEBİLİN 
+ornek
+```dart
+//... BU STYLERI DA THEME DAN VS YAPABILIN
+ FocusNode focusNodeTextFieldOne = FocusNode();
+ //...
+
+//...
+              keyboardType: TextInputType.emailAddress,
+              autofocus: true,
+              autofillHints: const [AutofillHints.email],
+              focusNode: focusNodeTextFieldOne,
+              inputFormatters: [TextProjectInputFormmater()._formmatter],
+              textInputAction: TextInputAction.next,//BU ENTERA TIKLANINCA   ALTTAKİ TEXTFIELD A GEÇİŞİ SAĞLAR
+              decoration: _InputDecarotor().emailInput,
+//...
+
+class _InputDecarotor {
+  final emailInput = const InputDecoration(
+    prefixIcon: Icon(Icons.mail),
+    border: OutlineInputBorder(),
+    labelText: LanguageItems.mailTitle,
+  );
+}
+```
+
+- sorunu ya da widgeti ya da ozelligi anlamazsan kod icine bak belki anlarsın:D
+
+
+
+
+
+
+
+
+
+
 
 
 
