@@ -1,9 +1,12 @@
 # Temelden Zirveye Flutter Derslerinde Aldığım Notlar
+
 ### Flutter ve Dartı az biliyorum ayrıntılara , kullanmadığım özelliklere ve detaylara da dikkat edeyim derken kendim ve böyle düşünenler için aldığım notlar.
+
 --Not: Bazı kodlarda hata olabilir orda aktarmak istenene odaklanın, doğru kullanımı zaten bulabilirsiniz.
 
-- Eğer Row ya da Col kısaysa ``.extended `` kullanabilirsin. daire sekli yerine stadium  sekli olur.
-ornek:
+- Eğer Row ya da Col kısaysa `.extended ` kullanabilirsin. daire sekli yerine stadium sekli olur.
+  ornek:
+
 ```dart
  FloatingActionButton.extended(
         onPressed: _incrementCounter,
@@ -18,9 +21,10 @@ ornek:
         ),
       )
 ```
+
 - ThemeData.dark() kullanarak dark modu aktif edebilirsin.
 - Style classi oluşturman kodun okunurluğunu arttırır.
-ornek:
+  ornek:
 
 ```dart
 class Style {
@@ -30,15 +34,15 @@ class Style {
   );
 }
 ```
+
 - Stringleri birleştirmek için $ kullanabilirsin.
-ornek:
+  ornek:
 
 ```dart
 Text('Your name is $name and length is ${name.length}'),
 ```
 
-
-- Style classi kullanmanı gerektirmeyen bir diğer özellikse default temalardır. Belirli özelliklerini ``copyWith`` ile değiştirebilirsin.
+- Style classi kullanmanı gerektirmeyen bir diğer özellikse default temalardır. Belirli özelliklerini `copyWith` ile değiştirebilirsin.
 
 ornek:
 
@@ -48,16 +52,19 @@ ThemeData(
      color: Colors.red,
    ),
 ```
- - asagidaki koda dikkat
- ornek:
+
+- asagidaki koda dikkat
+  ornek:
+
 ```dart
 final String? name = 'Flutter Demo Home Page';
-Text(name!) // Yanlıs Kullanım!!! 
+Text(name!) // Yanlıs Kullanım!!!
 Text(name ?? '') // Dogru Kullanım
-  ```
+```
 
 - Stil sınıfları oluştururken de mesela olusturdugumuz renk sınıflarından yaralanabiliriz.
-ornek:
+  ornek:
+
 ```dart
 class ProjectStyle {
   static const TextStyle title = TextStyle(
@@ -72,7 +79,8 @@ class ProjectColor {
 ```
 
 - Dosyadaki string ifadeleri de bir classta toplayabilirsin.
-ornek:
+  ornek:
+
 ```dart
 widget {
     final ProjectKeys keys = ProjectKeys();
@@ -83,10 +91,12 @@ class ProjectKeys {
   final String welcome = 'Welcome';
 }
 ```
-- Material app içindeki ``title`` uygulamayı diğer uygulamalarla goruntulerken gozuken ismidir.
+
+- Material app içindeki `title` uygulamayı diğer uygulamalarla goruntulerken gozuken ismidir.
 - Material app projede bir tane olmalıdır. Aksi durumda routing bozulur vs.
-- Container içindeki ``constraint`` kullanımı 
-ornek:
+- Container içindeki `constraint` kullanımı
+  ornek:
+
 ```dart
 Container(
   constraints: BoxConstraints(
@@ -96,9 +106,11 @@ Container(
   child: Text('Hello World'),
 )
 ```
-- ``padding`` içerden uzaklık ``margin`` dıştan uzaklık
+
+- `padding` içerden uzaklık `margin` dıştan uzaklık
 - Birden fazla kullanılacak decoration için bir class oluşturabilirsin.
-ornek:
+  ornek:
+
 ```dart
 // ornek - 1
 class ProjectConainterDecoration extends BoxDecoration {
@@ -127,19 +139,21 @@ class ProjectUtility {
         spreadRadius: 5,
       ),
     ],);
-        
+
 }
 ```
+
 - scaffold 3 ana widgeti barındırır.
+
   - appbar
   - body
   - bottomNavigationBar
 
-- ``FloatingAcionButon`` centerde hoş duruyo
-- ``bottomsheet`` asagidan yukarı doğru açılan bir pencere , extendbody 
-- ``bottomnavbarlara`` da üstteki classlardaki stylelar aktarılabilir.
-- buton türleri  bunların onpressini null yaparsan buton aktif olmaz. enable olayı gibi . Text butonda renk degistirme yerine outlineda daha kolay
--butonların sonuna `.icon` konarak iconlu butonlar oluşturulabilir.
+- `FloatingAcionButon` centerde hoş duruyo
+- `bottomsheet` asagidan yukarı doğru açılan bir pencere , extendbody
+- `bottomnavbarlara` da üstteki classlardaki stylelar aktarılabilir.
+- buton türleri bunların onpressini null yaparsan buton aktif olmaz. enable olayı gibi . Text butonda renk degistirme yerine outlineda daha kolay
+  -butonların sonuna `.icon` konarak iconlu butonlar oluşturulabilir.
   - textbutton
   - elevatedbutton
   - floatingactionbutton
@@ -150,17 +164,17 @@ class ProjectUtility {
     Borders
     - RoundedRectangleBorder
     - CircleBorder
-- appbarda ``leading`` uctaki icon, ``actions`` sondaki sey ,``centertitle`` onemli, bg kaldırma icin transparent yap ve elevation 0 yap,``systemoverlaystyle`` ile statusbar rengini değiştir(statusbar appbarın da üstü olan kısım appbar ile status renkleri aynı olmalı)) ,
-- ``automaticallyImplyLeading``: false yaparsan appbardaki geri butonu kaldırılır.
-- projedeki her appbar için aynı olan özellikleri mainde ``themedataya`` ``copywith`` ile ekleyebilirsin.Copywith parenttan alır eğer iletirse kendi özelliklerini ekler childa salar.
-- parametreler arasından {} içindekiler harici rqeuired olanlar.
--``outlinebuttnları`` kullanmayı unutma diğer hallerine kıyasla daha iyi
+- appbarda `leading` uctaki icon, `actions` sondaki sey ,`centertitle` onemli, bg kaldırma icin transparent yap ve elevation 0 yap,`systemoverlaystyle` ile statusbar rengini değiştir(statusbar appbarın da üstü olan kısım appbar ile status renkleri aynı olmalı)) ,
+- `automaticallyImplyLeading`: false yaparsan appbardaki geri butonu kaldırılır.
+- projedeki her appbar için aynı olan özellikleri mainde `themedataya` `copywith` ile ekleyebilirsin.Copywith parenttan alır eğer iletirse kendi özelliklerini ekler childa salar.
+- parametreler arasından {} içindekiler harici rqeuired olanlar. -`outlinebuttnları` kullanmayı unutma diğer hallerine kıyasla daha iyi
 - renkleri isimlendirmek için https://chir.ag/projects/name-that-color/ kullanabilirsin.
 - static yaparken dikkatli ol dedi,
 - eğer renk verirken temadan alırsan tema değişiminde ona uygun bir renk değişimi olur yorulmazsın.
-- hani color: Colors.red yaparken ``enumaration`` kullanılıyo kendi renklerini de oluşturabilirsin.
+- hani color: Colors.red yaparken `enumaration` kullanılıyo kendi renklerini de oluşturabilirsin.
 - kodların classları birbirinden ayrı olsun , oop kullanıyoruz o kadar.
-ornek:
+  ornek:
+
 ```dart
 //static ornek olması için normalde static kullanmayız
 widget {
@@ -172,15 +186,15 @@ class ColorsItems {
 }
 ```
 
+-eger sadece o file üzerinden erişilecekse file private yap \_ ile başlat
 
--eger sadece o file üzerinden erişilecekse file private yap _ ile başlat
-```dart	
+```dart
 // wigeta atamak için required vs hallediyoz
 final String text2 = "veli";
  widget { _TitleTextWidget(text: text2),
            _TitleTextWidget(text: "veli2"),
           }
-        
+
 class _TitleTextWidget extends StatelessWidget {
   const TitleTextWidget({Key? key, required this.text}) : super(key: key);
   final String text;
@@ -194,9 +208,12 @@ class _TitleTextWidget extends StatelessWidget {
   }
 }
 ```
+
 -widgetlar iki yandan da eşit uzaklıkta olmalı , paddingi kullanman işiine yararr , symetric veritcal ve horizontal kullan,
-   - eğer aynı alanda her componente aynı paddingi ekliyorsan yanlış yapıyorsun. Onun yerine o özelliği parentine ver.
-ornek:
+
+- eğer aynı alanda her componente aynı paddingi ekliyorsan yanlış yapıyorsun. Onun yerine o özelliği parentine ver.
+  ornek:
+
 ```dart
 //standardı sağlamak için boyle yapanzi
 widget {
@@ -210,14 +227,17 @@ class ProjectPadding {
   static const pagePaddingRightOnly = EdgeInsets.only(right: 20);
 }
 ```
+
 - Card Borderları
   - RoundedRectangleBorder
   - CircleBorder
   - StadiumBorder
 
 Custom Card oustururken içinde child olmasını engellemek için childi asagidaki gibi yaparak kullanabiliriz
-- Ayrıca yine mainde ``cardTheme`` ile cardlar için genel bir tema oluşturabiliriz.
-ornek:
+
+- Ayrıca yine mainde `cardTheme` ile cardlar için genel bir tema oluşturabiliriz.
+  ornek:
+
 ```dart
 //burada keyin dışında required child eklenir. final widget child a atanır ordan da widgeta gönderilir.
 widget {
@@ -245,27 +265,29 @@ class _CustomCard extends StatelessWidget {
   }
 }
 ```
+
 - assette neler tutuyoruz
-    - resimler
-    - fontlar
-    - jsonlar
-    - iconlar
-    - diller
-    - config dosyaları
-- Image eklerken ``Image.network`` olanında ``errorBuilder`` kullanıp placeholder ekleyebiliriz.
-ornek:
+  - resimler
+  - fontlar
+  - jsonlar
+  - iconlar
+  - diller
+  - config dosyaları
+- Image eklerken `Image.network` olanında `errorBuilder` kullanıp placeholder ekleyebiliriz.
+  ornek:
+
 ```dart
 errorBuilder: (context, error, stackTrace) => const Icon(Icons.abc_outlined),
 ```
-- Text() içindeki metne sağ tıklayıp ``extract local variable`` yapıp ayırabiliriz.Onu da yukarı at. karmaşık gözükmesin.
 
-- ``with`` ile utility ekleme yontemi ve ``styleFrom`` ``primary`` ve ``shape`` özellikleri
-  - birden fazla kez kullanılabilecek bir buton benzer özelliklerdeyse aynı ozellikleri belirlenir. Değişken özellikleri de kendimiz ekleriz.
-  -`` final void Function() onPressed;`` ile butonun basılması durumunda ne olacağını belirleriz. void callbakc function.
+- Text() içindeki metne sağ tıklayıp `extract local variable` yapıp ayırabiliriz.Onu da yukarı at. karmaşık gözükmesin.
 
-```dart	 
+- `with` ile utility ekleme yontemi ve `styleFrom` `primary` ve `shape` özellikleri
+  - birden fazla kez kullanılabilecek bir buton benzer özelliklerdeyse aynı ozellikleri belirlenir. Değişken özellikleri de kendimiz ekleriz. -` final void Function() onPressed;` ile butonun basılması durumunda ne olacağını belirleriz. void callbakc function.
+
+```dart
 // ornek Utility ekleme yöntemi
-class CustomFootButton extends StatelessWidget with _ColorsUtility, _PaddingUtility //<<< with _ColorsUtility, _PaddingUtility 
+class CustomFootButton extends StatelessWidget with _ColorsUtility, _PaddingUtility //<<< with _ColorsUtility, _PaddingUtility
 {
   CustomFootButton({Key? key, required this.title, required this.onPressed}) : super(key: key);//<<< required this.onPressed
   final String title;
@@ -292,30 +314,35 @@ class _PaddingUtility {
   final EdgeInsets normalPadding = const EdgeInsets.all(8.0);
   final EdgeInsets normal2xPadding = const EdgeInsets.all(16.0);
 }
-```	
-- indikator eklemek için ``CircularProgressindicator`` kullanabilirsin , yine ``themeData`` üzerinden ``progressindicatortheme`` ile kişiselleştirebilirsin.
-- ``listtile`` da twitterda postlar altalta ya onun gibi. özellikleri , title subtitle leading trailing bir de buradaki özelliklere istediğin widgeti ekleebilirsin yani title a image vs. ``listTileTheme`` ile de tema oluşturabilirsin.
-- heryerde kullabileceğin componentleri ``core`` klasöründe , projeye özel olanları da ``product`` klasöründe tut.
-- required kısmında eğer veri gelmezse varsayılan değer atamak için{ ... ,``this.degisken= deger``} sekline yapabilirsin.
+```
+
+- indikator eklemek için `CircularProgressindicator` kullanabilirsin , yine `themeData` üzerinden `progressindicatortheme` ile kişiselleştirebilirsin.
+- `listtile` da twitterda postlar altalta ya onun gibi. özellikleri , title subtitle leading trailing bir de buradaki özelliklere istediğin widgeti ekleebilirsin yani title a image vs. `listTileTheme` ile de tema oluşturabilirsin.
+- heryerde kullabileceğin componentleri `core` klasöründe , projeye özel olanları da `product` klasöründe tut.
+- required kısmında eğer veri gelmezse varsayılan değer atamak için{ ... ,`this.degisken= deger`} sekline yapabilirsin.
 - girilen height bilgisi de aynı sekilde classlarda tutulabilir.
-- stack te positioned kullanarak childlerin yerini ayarlayabilirsin.  positioned.fill ile de childin tamamını kaplayabilirsin. altına bir positioned daha atarsan alttaki üstte gözükür.
+- stack te positioned kullanarak childlerin yerini ayarlayabilirsin. positioned.fill ile de childin tamamını kaplayabilirsin. altına bir positioned daha atarsan alttaki üstte gözükür.
 - statelessswidget a sağ tıklayıp statefulwidget yapabalirsin.
-- widgeta sağ tıklayıp ``extract widget`` yaparsan ayrı bir widget oluşturur. _ koy basa 
+- widgeta sağ tıklayıp `extract widget` yaparsan ayrı bir widget oluşturur. \_ koy basa
 - benzer kodları olabildiğince birleştirmeyi dene
-- setstatei kullandığın widgetin güncellemesi kendisiyle sınırlı olsun ekranı yenilemesin.Bunun için ``product `` a orn counterbutton eklersin orda widgeti yazarsn
-- HER PROJEDE STRINGLERI KULLANIRSIN GENELDE BU YUZDEN PRODUCT KLASÖRÜNE ``language`` klasörü EKLE içine de language_items.dart oluştur. orda tüm stringleri tut.
-ornek:
+- setstatei kullandığın widgetin güncellemesi kendisiyle sınırlı olsun ekranı yenilemesin.Bunun için `product ` a orn counterbutton eklersin orda widgeti yazarsn
+- HER PROJEDE STRINGLERI KULLANIRSIN GENELDE BU YUZDEN PRODUCT KLASÖRÜNE `language` klasörü EKLE içine de language_items.dart oluştur. orda tüm stringleri tut.
+  ornek:
+
 ```dart
 class LanguageItems {
   static const welcomeTitle = "Merhaba";
   static const mailTitle = "Mail";
 }
 ```
--PageView ile sayfalar arası geçiş sağa sola kaydırarak (default sağ sol)yukarı aşağı kaydırarak  yapabilirsin. PageView.builder ile de sayfa sayısını belirleyebilirsin.
-  - ornek ozellikler controller : PageController (viewPortFraction: 0.8, initialPage: 1, keepPage: true, pageSnapping: true, reverse: false,)
-  - baska widget ile pageview controllerine etkimek için ``final PageController _pageController = PageController();  _pageController.jumpToPage(1); `` gibi kullanabilirsin.
+
+-PageView ile sayfalar arası geçiş sağa sola kaydırarak (default sağ sol)yukarı aşağı kaydırarak yapabilirsin. PageView.builder ile de sayfa sayısını belirleyebilirsin.
+
+- ornek ozellikler controller : PageController (viewPortFraction: 0.8, initialPage: 1, keepPage: true, pageSnapping: true, reverse: false,)
+- baska widget ile pageview controllerine etkimek için `final PageController _pageController = PageController();  _pageController.jumpToPage(1); ` gibi kullanabilirsin.
 
 ornek
+
 ```dart
 PageView(
         children: [
@@ -341,20 +368,23 @@ PageView.builder(
       ),
 ```
 
-- widget  keylerin orda`` {.., required this.metin}`` yaparsan altında da ``final String message`` koyarsa stateful widget kısmında metine erşimek için ``widget.metin`` şeklinde kullanabilirsin.
+- widget keylerin orda` {.., required this.metin}` yaparsan altında da `final String message` koyarsa stateful widget kısmında metine erşimek için `widget.metin` şeklinde kullanabilirsin.
 - initState widgetin constructorudur .Widget daha cizilmeden önce çalışır.
--final değeri atayamazsan late eklemen lazım initstate gibi constructorda atancaksa
+  -final değeri atayamazsan late eklemen lazım initstate gibi constructorda atancaksa
 - `didChanhgeDependencies` initstateden sonra , widgetin build metodu çalışmadan önce çalışır.
-ornek
+  ornek
+
 ```dart
  @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     print('c');
   }
-``` 
+```
+
 - `dispose()` widgetin ömrü bittiğinde çalışır. kullanılan controllerlar burada dispose edilir.
-ornek
+  ornek
+
 ```dart
  @override
   void dispose() {
@@ -363,8 +393,9 @@ ornek
   }
 ```
 
--textfield a decoration eklemek için ornek  ``decoration: InputDecoration(hintText: "hint", labelText: "label", border: OutlineInputBorder(),)`` şeklinde  ya da yapabilirsin.
--Metin uzunluğuna göre rengi değişen kutu BuildCounter ile yapılabilir. 
+-textfield a decoration eklemek için ornek `decoration: InputDecoration(hintText: "hint", labelText: "label", border: OutlineInputBorder(),)` şeklinde ya da yapabilirsin.
+-Metin uzunluğuna göre rengi değişen kutu BuildCounter ile yapılabilir.
+
 ```dart
 buildCounter: (BuildContext context, {int? currentLength, bool? isFocused, int? maxLength}) {
                 return _animatedContainer(currentLength);
@@ -376,9 +407,11 @@ _animatedContainer(
   //..
     ),
 ```
+
 -AnimatedContainer ile animasyonlu container oluşturabilirsin. geçiş hoş olur vs
--keyboard type mail num vs ayarla işe yarar.  MİMMAX LİNE VS DE EKLEYEBİLİN 
+-keyboard type mail num vs ayarla işe yarar. MİMMAX LİNE VS DE EKLEYEBİLİN
 ornek
+
 ```dart
 //... BU STYLERI DA THEME DAN VS YAPABILIN
  FocusNode focusNodeTextFieldOne = FocusNode();
@@ -405,18 +438,194 @@ class _InputDecarotor {
 
 - sorunu ya da widgeti ya da ozelligi anlamazsan kod icine bak belki anlarsın:D
 
+- codingde index şartları hazırlarken` ==0` gibi durumlar yerine enum `_pageColors{red,yellow,blue }` gibi bişi yapıp` == _pageColors.red.index` yapman okuyuculuğu vs daha iyi etkiler.
 
+- ui yani build içinde kod olmamalı dikkat et , `extract method ` kullan
+- nullableda diğer senaryoları alt widget yapmalı böylece daha kullanıalabilir olr
+- üstten assa veri gidio da alltan üste gitmezse `didUpdateWidget` soyle seler var
+  orneka
 
+```dart
+@override
+  void didUpdateWidget(covariant ColorDemos oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.initialColor != _backgroundColor && widget.initialColor != null) {
+      changeBackgroundColor(widget.initialColor!);
+    }
+  }
+    void changeBackgroundColor(Color color) {
+    setState(() {
+      _backgroundColor = color;
+    });
+  }
 
+```
 
+- widget sığmazsa die `fittedBox` kulanabilin
+- divider ve spacer
+- `listliew` scroll yapmana yarar özellik olarak üstten `paddingi` var `zero` ile sıfırlaryabilirsin
 
+  - `listview` içindeki daha ekranda olmayan widgetler çalışmaz ekrana geldiği an `init` gittiği an `dispose` çalışır.
+  - `shrinkwrap` sizei belli olmayan widgetin sizeini bi şekilde ayarlio
+  - `builder` ekranda olanları initliyo `separotrbuilder` ayraç da eklio aralarına
+  - `itemCount` sayısını vermek istersen
+  - itemCount ekrandaki widget sayısından fazlaysa item count kadar init olur ancak Column'u Sizedbox ile sınırlandırırsan ekrandaki widget sayısı kadar init olur. 15 ten 4 e gibi
+    ornek
 
+  ````dart
+  ListView.separated(
+        separatorBuilder: (context, index) {
+          return const Divider(color: Colors.white);
+        },
+        itemBuilder: (context, index) {
+          return SizedBox(
+            height: 200,
+            child: Column(
+              children: [Expanded(child: Image.network('https://picsum.photos/200')), Text('$index')],
+            ),
+          );
+        },
+        itemCount: 15,
+      ),
+      ```
 
+  ````
 
+- Image sığmadığında expanded ile sarmalayanzi
+- https://github.com/VB10/Flutter-Full-Learn/blob/main/lib/demos/my_collections_demos.dart güzel ornek
 
+```dart
 
+class MyCollectionsDemos extends StatefulWidget {
+  const MyCollectionsDemos({Key? key}) : super(key: key);
+  @override
+  State<MyCollectionsDemos> createState() => _MyCollectionsDemosState();
+}
 
+class _MyCollectionsDemosState extends State<MyCollectionsDemos> {
+  //buradan almak üzere olacağımız itemleri initle CollectionItems() ile alıyoruz.
+  late final List<CollectionModel> _items;
+  @override
+  void initState() {
+    super.initState();
+    _items = CollectionItems().items;
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: ListView.builder(
+        itemCount: _items.length,
+        padding: PaddindUtility().paddingHorizontal,
+        itemBuilder: (context, index) {
+          return _CategoryCard(model: _items[index]);
+          //burada karta indexinci item veriliyor kartta model- (indexinci item) - denmiş buna
+        },
+      ),
+    );
+  }
+}
+//burada modelimiz yani CollectionModel tipindeki modelimiz geliyor.
+class _CategoryCard extends StatelessWidget {
+  const _CategoryCard({
+    Key? key,
+    required CollectionModel model,
+  })  : _model = model,
+        super(key: key);
 
+  final CollectionModel _model;
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: PaddindUtility().paddinBottom,
+      child: Padding(
+        padding: PaddindUtility().paddingGeneral,
+        child: Column(
+          children: [
+            Image.asset(_model.imagePath, fit: BoxFit.fill),
+            Padding(
+              padding: PaddindUtility().paddingTop,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [Text(_model.title), Text('${_model.price} eth')],
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
 
+class CollectionModel {
+  final String imagePath;
+  final String title;
+  final double price;
+  CollectionModel({required this.imagePath, required this.title, required this.price});
+}
 
+class CollectionItems {
+  late final List<CollectionModel> items;
+  CollectionItems() {
+    items = [
+      CollectionModel(imagePath: ProjectImages.imageCollection, title: 'Abstract Art', price: 3.4),
+      CollectionModel(imagePath: ProjectImages.imageCollection, title: 'Abstract Art2', price: 3.4),
+    ];
+  }
+}
 
+```
+
+- `navigate` kodunu direkt eklemek yerine `mixin`(constructorsuz class) olusturabliriz onu da widgeta `with` ile ekleyebiliriz
+
+```dart
+mixin NavigatorManager {
+  void navigateToWidget(BuildContext context, Widget widget) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+          builder: (context) {
+            return widget;
+          },
+          fullscreenDialog: true,
+          settings: const RouteSettings()),
+    );
+  }
+
+  class _NavigationLearnState extends State<NavigationLearn> with NavigatorManager {//with NavigatorManager
+
+    ...
+    onpressed:{
+      navigateToWidget(context,nextPageWidget());// navigateToWidget(context,nextPageWidget())
+    }
+  }
+```
+
+- navigate `push ` Type: Future<dynamic> Function(Route<dynamic>)
+  - Future oldğu için await var
+  - birinden `props` olarak diğerinden ise `pushtan` alarak iletim sağlananzi
+
+```dart
+Future<T?> push<T extends Object?>(Route<T> route)
+//Future Generic pushtan geri dönen değer var. Bunu tutabiliriz.
+```
+
+```dart
+Future<T?> navigateToWidgetNormal<T>(BuildContext context, Widget widget) {
+  return Navigator.of(context).push<T>(
+    MaterialPageRoute(
+        builder: (context) {
+          return widget;
+        },
+        settings: const RouteSettings()),
+  );
+}
+```
+
+```dart
+//T yerine burada kendi tipimizi giriyoruz.
+ onPressed: () async {
+            final response = await navigateToWidgetNormal<bool>(
+                context, NavigateDetailLearnDart(isOkey: selectedItems.contains(index)));
+```
+
+- integer list dizisi `List<int> selectedItems = [];` ile yapılr
+  - `.add()` `.remove` `.contains()` gibi methodları da vardır
