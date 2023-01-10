@@ -629,3 +629,239 @@ Future<T?> navigateToWidgetNormal<T>(BuildContext context, Widget widget) {
 
 - integer list dizisi `List<int> selectedItems = [];` ile yapılr
   - `.add()` `.remove` `.contains()` gibi methodları da vardır
+
+## Modellerle ilgili güzel notlar ve örnekler.
+``` dart
+/bu init edilmediğinden null olabileceğinden ağlıyor.
+/*
+class PostModel {
+  int userId;
+  int id;
+  String title;
+  String body;
+}
+*/
+//bu da ağlamıyo çünkü null gelebilir diyoruz. Bundan gelen verileri ??"" ile kullan ! kullanma.
+class PostModel1 {
+  int? userId;
+  int? id;
+  String? title;
+  String? body;
+}
+
+//Bunda ise nullable yok ağlar ancak constructor ile yaparsın. Bu variablelar uygulama contruct edildiğinde gelecek. ve gider
+class PostModel2 {
+  int userId;
+  int id;
+  String title;
+  String body;
+  PostModel2(this.userId, this.id, this.title, this.body);
+}
+
+// Bunu final yapıyorsun . YİNE AĞLIYOR. Çünkü hala init değil. Final olmasından dolayı sadece Contruct zamanında atanacak bir model yapmış oluyurz. ve gider.
+class PostModel3 {
+  final int userId;
+  final int id;
+  final String title;
+  final String body;
+
+  PostModel3(this.userId, this.id, this.title, this.body);
+}
+
+// burada ağlıyor, final yapan yine ağlıyor.  Named girsin istiyorsan yani model(a:"assd", b:"asdasd",c:31 ) vs. Contructora alıp değişkenleri { } içine alıyorsun. BAŞLARINA REQUIRED KOYUYORSUN.ve gitti.
+class PostModel4 {
+  final int userId;
+  final int id;
+  final String title;
+  final String body;
+
+  PostModel4({
+    required this.userId,
+    required this.id,
+    required this.title,
+    required this.body,
+  });
+}
+
+//ÜSTTEKI GİBİ NAMED GİRİYORuz ama fark constructorda this yerine type giriyoruz. yine ağlıyor. constructor sonuna ): _degisken=degisken; şeklinde yazıyoruz. ve gitti.
+class PostModel5 {
+  final int _userId;
+  final int _id;
+  final String _title;
+  final String _body;
+
+  PostModel5({
+    required int userId,
+    required int id,
+    required String title,
+    required String body,
+  })  : _userId = userId,
+        _id = id,
+        _title = title,
+        _body = body;
+}
+
+//5teki  ustteki gibi named alıyor. farkı sonda : _degisken=degisken; yerine classta late kullanıyoruz. ve gitti.
+class PostModel6 {
+  late final int _userId;
+  late final int _id;
+  late final String _title;
+  late final String _body;
+
+  PostModel6({
+    required int userId,
+    required int id,
+    required String title,
+    required String body,
+  }) {
+    _userId = userId;
+    _id = id;
+    _title = title;
+    _body = body;
+  }
+}
+
+//6dan farkı required yok. ağlıyor initial value ekliyoruz constructorda = 31; gibi
+class PostModel7 {
+  late final int _userId;
+  late final int _id;
+  late final String _title;
+  late final String _body;
+
+  PostModel7({
+    int userId = 31,
+    int id = 21,
+    String title = "Ferit",
+    String body = "adad",
+  }) {
+    _userId = userId;
+    _id = id;
+    _title = title;
+    _body = body;
+  }
+}
+
+//eğer bu postmodeliniz içinni doldurmadoğonız textfieldlarnız servisten bekleyenlerini.BUNLAR HEP NULL GELEBİLİR.  cONSTRUCTURDA OPTIONAL ANLAMINDA { } sarmalarsın . VE GİTTİ.
+class PostModel8 {
+  final int? userId;
+  final int? id;
+  final String? title;
+  final String? body;
+
+  PostModel8({this.userId, this.body, this.id, this.title});
+}
+
+
+// Generate Copywith kodu ampule tıklion genreate copywith ile sadece istediğin özelliği ekliyon ya da değiştiriyon.
+class PostModel9 {
+  final int? userId;
+  final int? id;
+  final String? title;
+   String? body;
+
+  PostModel9({this.userId, this.body, this.id, this.title});
+  void updateBody(String? data) {//normalde direkt baska sayfda postmode.copywith(body: "asdasd") yaparsın.  
+    //data.length hata verir
+    if (data != null&& data.isNotEmpty) {//
+      //data.length hata vermez burada body null değil
+      body = data;
+
+    }
+    //burada null olabliir.
+  }
+
+  PostModel9 copyWith({
+    int? userId,
+    int? id,
+    String? title,
+    String? body,
+  }) {
+    return PostModel9(
+      userId: userId ?? this.userId,
+      id: id ?? this.id,
+      title: title ?? this.title,
+      body: body ?? this.body,
+    );
+  }
+}
+
+```
+``` dart 
+class ModelLearnView extends StatefulWidget {
+  const ModelLearnView({Key? key}) : super(key: key);
+
+  @override
+  State<ModelLearnView> createState() => _ModelLearnViewState();
+}
+
+class _ModelLearnViewState extends State<ModelLearnView> {
+  var user9 = PostModel9(
+      body:
+          "aaaaa"); //fianl olmaz değişebilir veri olmalı var ya da PostModel gibi type
+  @override
+  void initState() {
+    // TODO: implement initState
+
+    final user1 =
+        PostModel1() // model sonuna .. ile direkt degistkenlere erisilebiliyor. fnial da değil tekrar atama yapılabiliriyo
+          ..userId = 31
+          ..title = "aaa"; //nullable olduğundan bişi istemedi
+    user1.body = "body";
+
+    final user2 = PostModel2(31, 15, "aaa",
+        "body"); //nullable değil ama constructor var fnial da değil tekrar atama yapılabiliriyor
+    user2.userId = 21;
+
+    final user3 = PostModel3(31, 15, "aaa",
+        "body"); ////nullable değil ama constructor var final olduğundan tekrar atama yapamıyoruz.
+    //user3.userId = 21; olmaz X
+    final user4 = PostModel4(
+        userId: 31,
+        id: 15,
+        title: "aaa",
+        body:
+            "body"); //named giriyoruz. final olduğundan tekrar atama yapamıyoruz.
+    //user4.body="body"; //olmaz X
+
+    final user5 = PostModel5(
+        userId: 31,
+        id: 15,
+        title: "aaa",
+        body:
+            "body"); //named giriyoruz. final olduğundan tekrar atama yapamıyoruz.
+    //user5. yapınca degiskenler gözükmüyor çünkü _ private
+
+    final user6 = PostModel6(
+        userId: 31,
+        id: 15,
+        title: "aaa",
+        body:
+            "body"); //named giriyoruz. final olduğundan tekrar atama yapamıyoruz.
+    //user6. yapınca degiskenler gözükmüyor çünkü _ private
+    final user7 = PostModel7();
+    //user7.userId = 31;   yapınca degiskenler gözükmüyor çünkü _ private
+
+    final user8 = PostModel8(body: "aaaaa");
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(() {
+            user9 = user9.copyWith(title: "titleyeni");
+            user9.updateBody(null);//mukemmel bisi eğer veri gelirse veri değişir null gelirse değişmez
+          });
+        },
+      ),
+      appBar: AppBar(
+        title: Text(user9.title ??
+            "NULL GELENZİ"), //null gelirse null gelmezse title yazdır
+      ),
+      body: Container(),
+    );
+  }
+}
+
+```
