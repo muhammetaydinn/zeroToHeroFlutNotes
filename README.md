@@ -631,7 +631,8 @@ Future<T?> navigateToWidgetNormal<T>(BuildContext context, Widget widget) {
   - `.add()` `.remove` `.contains()` gibi methodları da vardır
 
 ## Modellerle ilgili güzel notlar ve örnekler.
-``` dart
+
+```dart
 /bu init edilmediğinden null olabileceğinden ağlıyor.
 /*
 class PostModel {
@@ -760,7 +761,7 @@ class PostModel9 {
    String? body;
 
   PostModel9({this.userId, this.body, this.id, this.title});
-  void updateBody(String? data) {//normalde direkt baska sayfda postmode.copywith(body: "asdasd") yaparsın.  
+  void updateBody(String? data) {//normalde direkt baska sayfda postmode.copywith(body: "asdasd") yaparsın.
     //data.length hata verir
     if (data != null&& data.isNotEmpty) {//
       //data.length hata vermez burada body null değil
@@ -786,7 +787,8 @@ class PostModel9 {
 }
 
 ```
-``` dart 
+
+```dart
 class ModelLearnView extends StatefulWidget {
   const ModelLearnView({Key? key}) : super(key: key);
 
@@ -865,3 +867,90 @@ class _ModelLearnViewState extends State<ModelLearnView> {
 }
 
 ```
+
+- dogrudan db ye erişmek riskli bunun yerine ara katman olan servis ile eriş
+- response 200 300 arasındaysa başarılı 400 fazlaysa sorunn var 500 sunucu çökmüş.
+- bize response `map` şeklinde geliyor o yüzden alırken `fromjson` atarken `toJson` kullanmalıyız bunu da JSONTODART ile ya da ameleisi
+- servis işlemleri için `dio` ve `http` vardır ikisini de kulllanabilirsin pek farlı yok gibi? ?
+  - lib içinde `services` klasörü oluştur.
+  - services klasörü içinde `service_view.dart` dosyası oluştur. //isimlendirmeler değişebilir
+  - services klasörü içinde `post_model.dart` gibi bir model dosyası oluştur. //isimlendirmeler değişebilir
+  - Yeniyse` JSON TO DART` sitesinden direkt JSON responsu yapıştırıp class adını değiştirerek post_model.dart dosyana yapıştır. Küçük uyarılar gelirse kaldır vs yap.
+  - Model dosyasına ek kod yazılmaz eğer update vs istersen dışında function vs bişi yaparsın
+  - await kullandığında cevap gelmeden bir alt koda geçiş olmaz. Bundan dolayı loading olayını üst ve alt setstate dümeni ile deneyebilirsin.
+  ornek fetch 
+  ```dart
+   Future<void> fetchPostItems() async {
+    _changeLoading();
+    final response = await _dio.get("posts");
+    if (response.statusCode == HttpStatus.ok) {
+      //200
+      final datas = response.data;
+      if (datas is List) {//liste ise mapleyeip ata
+        _items = datas.map((e) => PostModel.fromJson(e)).toList();
+      }
+      //
+      setState(() {
+        _items =
+            (response.data as List).map((e) => PostModel.fromJson(e)).toList();
+      });
+    }
+    //print(response.data[0]["title"]
+    _changeLoading();
+  }
+  ```
+  - initle tanımlananacak ``late final Dio _dio``  ,, initte  ``fetchPostItems(); `` ve `` _dio = Dio(BaseOptions(baseUrl: _baseUrl));``
+  - status 200 yerine HttpStatus.ok kullanabilin ama html den değil io dan import edilmeli
+- post atmadan once modeli doldurmadan once ifle`` && controller.text.isNotEmpty`` check yap işine yarar,taklayagelmezsin
+- post get şeylerini try catch içine al
+- hoca mobilde ayrı ayrı servis katmanları yapıyomus.`` post_service.dart `` 
+  - servis kısmında change loading diye servis kısmı olmaz.
+    - atama işlemleri de olmaz (await olanlar hariç)
+    - setstate olmaz (içindeki olur).
+    - kendi verileri değilse olmaz ?
+    ```dart 
+    //LATE DEMEDEN 
+    final Dio _dio;
+    PostService() : _dio = Dio(BaseOptions(baseUrl: 'https://jsonplaceholder.typicode.com/'));
+    ```
+  - erişilecek methodlar private olmamalı.
+  - response olarak ``post`` ta sadece response status onemli oldugundan o methodu <bool> yapmak daha mantıklı.
+  - response olarak ``get`` te bir veri seti geliyo o yüzden o methodu <List < Modeli>?> şeklinde  `_datas is List` kontrolu ? ``mapleyip ata`` : ``null`` dön,
+- serviste birden fazla path adı olması durumunda temizlik için enumaration kullan.
+```dart
+enum _PostServicePaths { posts, comments }
+```
+- put da bool return etse yeter, update de. parametreler degisir max. 
+- httpstatuslar yaptığın işleme göre farklı olmalı ``ok`` ``created``
+- bu servisteki metodları vs de interface çıkartın class ile neleri yapabileceğimize erişebilir daha safe. ardından diğerlerini ``override`` edion. kullanacak classa da ``implents`` edion
+
+
+```dart
+abstract class IPostService {
+  Future<bool> addItemToService(PostModel postModel);
+  Future<bool> putItemToService(PostModel postModel, int id);
+  Future<bool> deleteItemToService(int id);
+  Future<List<PostModel>?> fetchPostItemsAdvance();
+  Future<List<CommentModel>?> fetchRelatedCommentsWithPostId(int postId);
+}
+```
+ 
+
+- test edilebilir kod sağlar.
+- belli idye sahip get etme
+```dart 
+await _dio.get(_PostServicePaths.comments.name, queryParameters: {_PostQueryPaths.postId.name: postId}); 
+ ```
+
+
+
+## Random Bilgi Köşesi
+
+- Emulator interneti giderse COLD BOOT
+- Saçma şekilde toString varken extract widget yapamadım.
+- Extract widget class dışında da kullabilir halde olması demek class olurç
+- Extract method ise class içinde bir method olr yani sanırm.
+
+## KESIN KULLANIRIM
+- post get şeylerini try catch içine al
+- printleri kdebug içinde kullan fazlaysa class içinde de yap parametreli olsun<T> ile sorunun yerini de tespit edebilin.
