@@ -942,6 +942,83 @@ abstract class IPostService {
 await _dio.get(_PostServicePaths.comments.name, queryParameters: {_PostQueryPaths.postId.name: postId}); 
  ```
 
+ - Mesela loading widgetin var boyle widgetleri packages klasorüne koyabilirsin. Farklı özelliği varsa mesela size gibi üstten alacak şekilde required ekleyerek clean olr.
+ ornek packages/loading_bar.dart
+ ```class LoadingBar extends StatelessWidget {
+  const LoadingBar({Key? key, this.size}) : super(key: key);
+  final double? size;
+  final _deafultSize = 40.0;
+
+  @override
+  Widget build(BuildContext context) {
+    return SpinKitPianoWave(
+      color: Colors.red,
+      size: size ?? _deafultSize,
+    );
+  }
+}
+```
+#Google
+  url_launcher: ^6.0.20
+  bu paket ile  yonlendirme açabilirsin. 
+- temalarını toplamak adına theme klasörü içine light ve dark tema dosyları aç classlarla hallet
+```dart	
+class LighTheme {
+  final _lightColor = _LightColor();
+
+  late ThemeData theme;
+
+  LighTheme() {
+    theme = ThemeData(
+        appBarTheme: const AppBarTheme(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(bottom: Radius.circular(20)))),
+        scaffoldBackgroundColor: Colors.white.withOpacity(0.9),
+        floatingActionButtonTheme: const FloatingActionButtonThemeData(backgroundColor: Colors.green),
+        buttonTheme: ButtonThemeData(
+            colorScheme: ColorScheme.light(onPrimary: Colors.purple, onSecondary: _lightColor.blueMenia)),
+        colorScheme: const ColorScheme.light(),
+        checkboxTheme: CheckboxThemeData(
+            fillColor: MaterialStateProperty.all(Colors.green), side: const BorderSide(color: Colors.green)),
+        textTheme:
+            ThemeData.light().textTheme.copyWith(subtitle1: TextStyle(fontSize: 25, color: _lightColor._textColor)));
+  }
+}
+```
+-mixin kimden gelecegini sınırlandırırsın on ile kim oldugunu sınırla
+- basit ornek icin bir ``state_manage`` klasoru olustur
+  - orn state_learn_view_model.dart ve state_manage_learn.dart olsn. view_model view ile model arası katman demek.
+  - view_model dosyasında bir viewModel ile biten class oluştur içine logic işlemleri ata 
+  - view dosyasına view şeyleri koy
+  - view dosyasının extend den sonrasını viewmodele koy  ``extends State<StateManageLearnView>`` view model dosyasına ``material`` ekle ``kütübü`` ekle  classı ``abstract`` yap
+  - view dosyasının extendini viewmodel yap
+  - _ basında olan private seylerden _ karakterini kaldır public olsn.
+- ``textField`` ile ``textFormField`` arası fark formda validation da var.
+- butona vs bastım mı basmadımmı için form var tekse o TextFormField i değilse Üstündeki Componenti ``Form`` ile sarmlaa
+   - widgeta doğrudan erişmek için key var ,. Uniquekey, value ve ``GlobalKey``
+   - ornek Formda key`` Global<FormState> _key =GlobalKey();``
+   - Formun içindeki TextFormFielda erişmek için ``_key.currentState!.validate();``
+   - her zaman validate etsin diyorsa yani anlık olarak boş bıraksa bile hata gözüksün istiyorsak ``autoValidateMode:AutoValidateMode.always`` ekler.
+   - BU AMA ilk textfielddan itibaren diğerlerini de tetikler daha doldurmadan hata gelir.
+   -checkBoxList tile var mıs güzelmis
+   - validatorları ayrı classa filan alanzi
+   ornek
+   ```dart
+   
+class FormFieldValidator {
+  String? isNotEmpty(String? data) {
+    return (data?.isNotEmpty ?? false) ? null : ValidatorMessage._notEmpty;
+  }
+}
+
+class ValidatorMessage {
+  static const String _notEmpty = "Boş geçilemez.";
+}
+```
+
+
+  
+
+
 
 
 ## Random Bilgi Köşesi
@@ -950,7 +1027,16 @@ await _dio.get(_PostServicePaths.comments.name, queryParameters: {_PostQueryPath
 - Saçma şekilde toString varken extract widget yapamadım.
 - Extract widget class dışında da kullabilir halde olması demek class olurç
 - Extract method ise class içinde bir method olr yani sanırm.
+- bazı paketler diğer paketlere bağlıdır yani bazıları yüklediğinde restart gerektirmez bazısı gerektirir.
+- tıkladıkça değişim, dönüşüm , opacity gitmesi vs için ``Animation`` kullan.
 
 ## KESIN KULLANIRIM
 - post get şeylerini try catch içine al
 - printleri kdebug içinde kullan fazlaysa class içinde de yap parametreli olsun<T> ile sorunun yerini de tespit edebilin.
+- depenednciye eklediğin paketlerin üstüne #yorumm yap da onun ne olduğunu bil #animasyon lottie gibi
+- Classların içindeki değişken ve methodlara . ile ulaşırken nullablelar için ?. yaparsın ya da null check yaparsın. Null gelmez oyle olursa.
+- nullable filan dümeninde ! kulanma ?  ?? kullan 
+
+
+## EKSIKLERIM - Calismam gerekener
+-servis işlemleri ve ardından kullanılan oop
