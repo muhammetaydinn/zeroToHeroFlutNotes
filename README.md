@@ -1002,7 +1002,7 @@ class LighTheme {
    -checkBoxList tile var mıs güzelmis
    - validatorları ayrı classa filan alanzi
    ornek
-   ```dart
+```dart
    
 class FormFieldValidator {
   String? isNotEmpty(String? data) {
@@ -1014,12 +1014,16 @@ class ValidatorMessage {
   static const String _notEmpty = "Boş geçilemez.";
 }
 ```
+-Cacheleme SharedPreferences ile yapılır.
+   - Cache adında bir klasör aç
+    - içinde orn shared_cache.dart dosyası aç
+    - initte async olmaz crashi yersin bunu ayrı bir async fonksiyon içinde yap initte o fonk çağır.
+- json decode obje doner encode edersen string doner
+.. bunu yapamadım ama buraya gelicek işlemler
 
 
-  
-
-
-
+-``showModalBottomSheet`` ile alttan yukarı çıkan şeyler olur
+- debug modda değilse inspect kullan
 
 ## Random Bilgi Köşesi
 
@@ -1029,6 +1033,8 @@ class ValidatorMessage {
 - Extract method ise class içinde bir method olr yani sanırm.
 - bazı paketler diğer paketlere bağlıdır yani bazıları yüklediğinde restart gerektirmez bazısı gerektirir.
 - tıkladıkça değişim, dönüşüm , opacity gitmesi vs için ``Animation`` kullan.
+- ``void Function (String)?`` de Func null olabilir demek , ``void Function (String?)`` string null olabilir demek
+
 
 ## KESIN KULLANIRIM
 - post get şeylerini try catch içine al
@@ -1040,3 +1046,7 @@ class ValidatorMessage {
 
 ## EKSIKLERIM - Calismam gerekener
 -servis işlemleri ve ardından kullanılan oop
+- mixin ve extension konuları,
+- todo benzeri bir app ile shared pref tam ogren secure de olsun jwt de dene
+
+
