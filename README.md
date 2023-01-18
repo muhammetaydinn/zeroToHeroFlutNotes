@@ -878,7 +878,7 @@ class _ModelLearnViewState extends State<ModelLearnView> {
   - Yeniyse` JSON TO DART` sitesinden direkt JSON responsu yapıştırıp class adını değiştirerek post_model.dart dosyana yapıştır. Küçük uyarılar gelirse kaldır vs yap.
   - Model dosyasına ek kod yazılmaz eğer update vs istersen dışında function vs bişi yaparsın
   - await kullandığında cevap gelmeden bir alt koda geçiş olmaz. Bundan dolayı loading olayını üst ve alt setstate dümeni ile deneyebilirsin.
-  ornek fetch 
+    ornek fetch
   ```dart
    Future<void> fetchPostItems() async {
     _changeLoading();
@@ -899,31 +899,32 @@ class _ModelLearnViewState extends State<ModelLearnView> {
     _changeLoading();
   }
   ```
-  - initle tanımlananacak ``late final Dio _dio``  ,, initte  ``fetchPostItems(); `` ve `` _dio = Dio(BaseOptions(baseUrl: _baseUrl));``
+  - initle tanımlananacak `late final Dio _dio` ,, initte `fetchPostItems(); ` ve ` _dio = Dio(BaseOptions(baseUrl: _baseUrl));`
   - status 200 yerine HttpStatus.ok kullanabilin ama html den değil io dan import edilmeli
-- post atmadan once modeli doldurmadan once ifle`` && controller.text.isNotEmpty`` check yap işine yarar,taklayagelmezsin
+- post atmadan once modeli doldurmadan once ifle` && controller.text.isNotEmpty` check yap işine yarar,taklayagelmezsin
 - post get şeylerini try catch içine al
-- hoca mobilde ayrı ayrı servis katmanları yapıyomus.`` post_service.dart `` 
+- hoca mobilde ayrı ayrı servis katmanları yapıyomus.`post_service.dart`
   - servis kısmında change loading diye servis kısmı olmaz.
     - atama işlemleri de olmaz (await olanlar hariç)
     - setstate olmaz (içindeki olur).
     - kendi verileri değilse olmaz ?
-    ```dart 
-    //LATE DEMEDEN 
+    ```dart
+    //LATE DEMEDEN
     final Dio _dio;
     PostService() : _dio = Dio(BaseOptions(baseUrl: 'https://jsonplaceholder.typicode.com/'));
     ```
   - erişilecek methodlar private olmamalı.
-  - response olarak ``post`` ta sadece response status onemli oldugundan o methodu <bool> yapmak daha mantıklı.
-  - response olarak ``get`` te bir veri seti geliyo o yüzden o methodu <List < Modeli>?> şeklinde  `_datas is List` kontrolu ? ``mapleyip ata`` : ``null`` dön,
+  - response olarak `post` ta sadece response status onemli oldugundan o methodu <bool> yapmak daha mantıklı.
+  - response olarak `get` te bir veri seti geliyo o yüzden o methodu <List < Modeli>?> şeklinde `_datas is List` kontrolu ? `mapleyip ata` : `null` dön,
 - serviste birden fazla path adı olması durumunda temizlik için enumaration kullan.
+
 ```dart
 enum _PostServicePaths { posts, comments }
 ```
-- put da bool return etse yeter, update de. parametreler degisir max. 
-- httpstatuslar yaptığın işleme göre farklı olmalı ``ok`` ``created``
-- bu servisteki metodları vs de interface çıkartın class ile neleri yapabileceğimize erişebilir daha safe. ardından diğerlerini ``override`` edion. kullanacak classa da ``implents`` edion
 
+- put da bool return etse yeter, update de. parametreler degisir max.
+- httpstatuslar yaptığın işleme göre farklı olmalı `ok` `created`
+- bu servisteki metodları vs de interface çıkartın class ile neleri yapabileceğimize erişebilir daha safe. ardından diğerlerini `override` edion. kullanacak classa da `implents` edion
 
 ```dart
 abstract class IPostService {
@@ -934,35 +935,39 @@ abstract class IPostService {
   Future<List<CommentModel>?> fetchRelatedCommentsWithPostId(int postId);
 }
 ```
- 
 
 - test edilebilir kod sağlar.
 - belli idye sahip get etme
-```dart 
-await _dio.get(_PostServicePaths.comments.name, queryParameters: {_PostQueryPaths.postId.name: postId}); 
- ```
 
- - Mesela loading widgetin var boyle widgetleri packages klasorüne koyabilirsin. Farklı özelliği varsa mesela size gibi üstten alacak şekilde required ekleyerek clean olr.
- ornek packages/loading_bar.dart
- ```class LoadingBar extends StatelessWidget {
-  const LoadingBar({Key? key, this.size}) : super(key: key);
-  final double? size;
-  final _deafultSize = 40.0;
+```dart
+await _dio.get(_PostServicePaths.comments.name, queryParameters: {_PostQueryPaths.postId.name: postId});
+```
 
-  @override
-  Widget build(BuildContext context) {
-    return SpinKitPianoWave(
-      color: Colors.red,
-      size: size ?? _deafultSize,
-    );
-  }
+- Mesela loading widgetin var boyle widgetleri packages klasorüne koyabilirsin. Farklı özelliği varsa mesela size gibi üstten alacak şekilde required ekleyerek clean olr.
+  ornek packages/loading_bar.dart
+
+```class LoadingBar extends StatelessWidget {
+ const LoadingBar({Key? key, this.size}) : super(key: key);
+ final double? size;
+ final _deafultSize = 40.0;
+
+ @override
+ Widget build(BuildContext context) {
+   return SpinKitPianoWave(
+     color: Colors.red,
+     size: size ?? _deafultSize,
+   );
+ }
 }
 ```
+
 #Google
-  url_launcher: ^6.0.20
-  bu paket ile  yonlendirme açabilirsin. 
+url_launcher: ^6.0.20
+bu paket ile yonlendirme açabilirsin.
+
 - temalarını toplamak adına theme klasörü içine light ve dark tema dosyları aç classlarla hallet
-```dart	
+
+```dart
 class LighTheme {
   final _lightColor = _LightColor();
 
@@ -984,26 +989,29 @@ class LighTheme {
   }
 }
 ```
+
 -mixin kimden gelecegini sınırlandırırsın on ile kim oldugunu sınırla
-- basit ornek icin bir ``state_manage`` klasoru olustur
+
+- basit ornek icin bir `state_manage` klasoru olustur
   - orn state_learn_view_model.dart ve state_manage_learn.dart olsn. view_model view ile model arası katman demek.
-  - view_model dosyasında bir viewModel ile biten class oluştur içine logic işlemleri ata 
+  - view_model dosyasında bir viewModel ile biten class oluştur içine logic işlemleri ata
   - view dosyasına view şeyleri koy
-  - view dosyasının extend den sonrasını viewmodele koy  ``extends State<StateManageLearnView>`` view model dosyasına ``material`` ekle ``kütübü`` ekle  classı ``abstract`` yap
+  - view dosyasının extend den sonrasını viewmodele koy `extends State<StateManageLearnView>` view model dosyasına `material` ekle `kütübü` ekle classı `abstract` yap
   - view dosyasının extendini viewmodel yap
   - _ basında olan private seylerden _ karakterini kaldır public olsn.
-- ``textField`` ile ``textFormField`` arası fark formda validation da var.
-- butona vs bastım mı basmadımmı için form var tekse o TextFormField i değilse Üstündeki Componenti ``Form`` ile sarmlaa
-   - widgeta doğrudan erişmek için key var ,. Uniquekey, value ve ``GlobalKey``
-   - ornek Formda key`` Global<FormState> _key =GlobalKey();``
-   - Formun içindeki TextFormFielda erişmek için ``_key.currentState!.validate();``
-   - her zaman validate etsin diyorsa yani anlık olarak boş bıraksa bile hata gözüksün istiyorsak ``autoValidateMode:AutoValidateMode.always`` ekler.
-   - BU AMA ilk textfielddan itibaren diğerlerini de tetikler daha doldurmadan hata gelir.
-   -checkBoxList tile var mıs güzelmis
-   - validatorları ayrı classa filan alanzi
-   ornek
+- `textField` ile `textFormField` arası fark formda validation da var.
+- butona vs bastım mı basmadımmı için form var tekse o TextFormField i değilse Üstündeki Componenti `Form` ile sarmlaa
+  - widgeta doğrudan erişmek için key var ,. Uniquekey, value ve `GlobalKey`
+  - ornek Formda key` Global<FormState> _key =GlobalKey();`
+  - Formun içindeki TextFormFielda erişmek için `_key.currentState!.validate();`
+  - her zaman validate etsin diyorsa yani anlık olarak boş bıraksa bile hata gözüksün istiyorsak `autoValidateMode:AutoValidateMode.always` ekler.
+  - BU AMA ilk textfielddan itibaren diğerlerini de tetikler daha doldurmadan hata gelir.
+    -checkBoxList tile var mıs güzelmis
+  - validatorları ayrı classa filan alanzi
+    ornek
+
 ```dart
-   
+
 class FormFieldValidator {
   String? isNotEmpty(String? data) {
     return (data?.isNotEmpty ?? false) ? null : ValidatorMessage._notEmpty;
@@ -1014,15 +1022,17 @@ class ValidatorMessage {
   static const String _notEmpty = "Boş geçilemez.";
 }
 ```
+
 -Cacheleme SharedPreferences ile yapılır.
-   - Cache adında bir klasör aç
-    - içinde orn shared_cache.dart dosyası aç
-    - initte async olmaz crashi yersin bunu ayrı bir async fonksiyon içinde yap initte o fonk çağır.
+
+- Cache adında bir klasör aç
+- içinde orn shared_cache.dart dosyası aç
+- initte async olmaz crashi yersin bunu ayrı bir async fonksiyon içinde yap initte o fonk çağır.
 - json decode obje doner encode edersen string doner
-.. bunu yapamadım ama buraya gelicek işlemler
+  .. bunu yapamadım ama buraya gelicek işlemler
 
+-`showModalBottomSheet` ile alttan yukarı çıkan şeyler olur
 
--``showModalBottomSheet`` ile alttan yukarı çıkan şeyler olur
 - debug modda değilse inspect kullan
 
 ## Random Bilgi Köşesi
@@ -1032,21 +1042,88 @@ class ValidatorMessage {
 - Extract widget class dışında da kullabilir halde olması demek class olurç
 - Extract method ise class içinde bir method olr yani sanırm.
 - bazı paketler diğer paketlere bağlıdır yani bazıları yüklediğinde restart gerektirmez bazısı gerektirir.
-- tıkladıkça değişim, dönüşüm , opacity gitmesi vs için ``Animation`` kullan.
-- ``void Function (String)?`` de Func null olabilir demek , ``void Function (String?)`` string null olabilir demek
+- tıkladıkça değişim, dönüşüm , opacity gitmesi vs için `Animation` kullan.
+- `void Function (String)?` de Func null olabilir demek , `void Function (String?)` string null olabilir demek
+
+- part part of ile birbirine bağlanır widget karmasıklasmasını önlemek için kullanılır.
+- equatable ile == override edilir
+- key ile birlikte gelen parametreler widget. ile erişebilin
+- Future callbackleri parametrelerde Future<void> Function seklinde ekle
+- Futurebuilder ile future işlemlerini yapabilirsin ornegin future : fetch gibi işlemler ,
+
+```dart
+  FutureBuilder<List<PostModel>?>(
+      future: _itemsFuture,
+      builder: (BuildContext context, AsyncSnapshot<List<PostModel>?> snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.none:
+            return const Placeholder();
+          case ConnectionState.waiting:
+          case ConnectionState.active:
+            return const Center(child: CircularProgressIndicator());
+          case ConnectionState.done:
+            if (snapshot.hasData) {
+              return ListView.builder(
+                itemCount: snapshot.data?.length ?? 0,
+                itemBuilder: (BuildContext context, int index) {
+                  return Card(
+                    child: ListTile(
+                      title: Text(snapshot.data?[index].body ?? ''),
+                    ),
+                  );
+                },
+              );
+            } else {
+              return const Placeholder();
+            }
+        }
+      },
+    )
+```
+
+- tabviewda ekrana her geldiğinde verilerin tekrar yüklenmesini engellemek için `AutomaticKeepAliveClientMixin` kullan
+  ornek
+
+```dart
+class _StateManageLearnViewState extends State<StateManageLearnView> with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+```
+
+artık veriler tekrar yüklenmez. Oldu ki o ekranda setstate olursa tekrar yüklenir.
+onu da engellemek için sole yap
+
+final Future<List<PostModel>?> \_itemsFuture; bunu ekliyon
+initstate de atamasını yapıyorsun artık ekranda setstate olursa bile o widget tekrar yüklenmez.
+
+```dart
+  @override
+  void initState() {
+    super.initState();
+    _itemsFuture = _postService.fetchPostItemsAdvance();
+  }
+```
+- ornek dosyalama name name/service name/model name/view_model name/view şeklinde içe doğru olacak şekilde yap
+-mvvm gibi vm klasörüne provider ekleyip orda kullan
+provider postman dio klasörleme vs için
+
+https://www.youtube.com/watch?v=mr5suYiOnPg&list=PL1k5oWAuBhgXdw1BbxVGxxWRmkGB1C11l&index=16
+
 
 
 ## KESIN KULLANIRIM
+
 - post get şeylerini try catch içine al
 - printleri kdebug içinde kullan fazlaysa class içinde de yap parametreli olsun<T> ile sorunun yerini de tespit edebilin.
 - depenednciye eklediğin paketlerin üstüne #yorumm yap da onun ne olduğunu bil #animasyon lottie gibi
 - Classların içindeki değişken ve methodlara . ile ulaşırken nullablelar için ?. yaparsın ya da null check yaparsın. Null gelmez oyle olursa.
-- nullable filan dümeninde ! kulanma ?  ?? kullan 
+- nullable filan dümeninde ! kulanma ? ?? kullan
+- Bir yere istek attığında devtooldan istek atılan şeye bak sağ tık ile curl bash kopyala postman da yapıştır direkt import edersin.
 
 
 ## EKSIKLERIM - Calismam gerekener
+
 -servis işlemleri ve ardından kullanılan oop
+
 - mixin ve extension konuları,
 - todo benzeri bir app ile shared pref tam ogren secure de olsun jwt de dene
-
-
