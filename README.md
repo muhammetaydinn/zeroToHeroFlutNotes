@@ -1089,6 +1089,7 @@ class _StateManageLearnViewState extends State<StateManageLearnView> with Automa
   @override
   bool get wantKeepAlive => true;
 ```
+//
 
 artık veriler tekrar yüklenmez. Oldu ki o ekranda setstate olursa tekrar yüklenir.
 onu da engellemek için sole yap
