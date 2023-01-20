@@ -1089,6 +1089,7 @@ class _StateManageLearnViewState extends State<StateManageLearnView> with Automa
   @override
   bool get wantKeepAlive => true;
 ```
+
 //
 
 artık veriler tekrar yüklenmez. Oldu ki o ekranda setstate olursa tekrar yüklenir.
@@ -1104,13 +1105,28 @@ initstate de atamasını yapıyorsun artık ekranda setstate olursa bile o widge
     _itemsFuture = _postService.fetchPostItemsAdvance();
   }
 ```
+
 - ornek dosyalama name name/service name/model name/view_model name/view şeklinde içe doğru olacak şekilde yap
--mvvm gibi vm klasörüne provider ekleyip orda kullan
-provider postman dio klasörleme vs için
+  -mvvm gibi vm klasörüne provider ekleyip orda kullan
+  provider postman dio klasörleme vs için
 
 https://www.youtube.com/watch?v=mr5suYiOnPg&list=PL1k5oWAuBhgXdw1BbxVGxxWRmkGB1C11l&index=16
 
-
+- lottie kendine özel animasyonlar için kullanılır mesela aç kapa butonnunu animasyonla kullanmak istersen işine yarayabilir. Animate.to Tema değiştirmek için vs işine yarar
+  - indirebilirsin ya da link ile çekersin ancak indirsen da iyi
+  - assets/lottie klasörüne at
+  - animationcontroller ile animasyonu kontrol edebilirsin
+  ```dart
+  class DurationItem extens Duration{
+    DurationItem.durationNormal() : super(seconds: 1);
+  }
+  ```
+- seklinde durationa kendin ek özellik ekleyebilin
+- ExampleClass.\_() ile yeni insatance üretimi engelleneblir
+- final dizilerde aslında pointer tutulur yani ekleme çıkarma olabilirpointer değişmedikçe , tamamile silemezsin .
+- veri farklı şekilde istediğin farklı şekildeyse `map` le
+  - spliti var singlewhere var , equalatable , bunları o class mmodelinde ypasan daha iyi bu komutları rty catch içine al
+- orElse ile default değer verilebilir
 
 ## KESIN KULLANIRIM
 
@@ -1120,7 +1136,6 @@ https://www.youtube.com/watch?v=mr5suYiOnPg&list=PL1k5oWAuBhgXdw1BbxVGxxWRmkGB1C
 - Classların içindeki değişken ve methodlara . ile ulaşırken nullablelar için ?. yaparsın ya da null check yaparsın. Null gelmez oyle olursa.
 - nullable filan dümeninde ! kulanma ? ?? kullan
 - Bir yere istek attığında devtooldan istek atılan şeye bak sağ tık ile curl bash kopyala postman da yapıştır direkt import edersin.
-
 
 ## EKSIKLERIM - Calismam gerekener
 
