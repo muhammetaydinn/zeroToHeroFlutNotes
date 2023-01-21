@@ -1022,6 +1022,7 @@ class ValidatorMessage {
   static const String _notEmpty = "Boş geçilemez.";
 }
 ```
+//dumen
 
 -Cacheleme SharedPreferences ile yapılır.
 
@@ -1090,7 +1091,7 @@ class _StateManageLearnViewState extends State<StateManageLearnView> with Automa
   bool get wantKeepAlive => true;
 ```
 
-//
+//selam ben muhammet 
 
 artık veriler tekrar yüklenmez. Oldu ki o ekranda setstate olursa tekrar yüklenir.
 onu da engellemek için sole yap
@@ -1105,6 +1106,9 @@ initstate de atamasını yapıyorsun artık ekranda setstate olursa bile o widge
     _itemsFuture = _postService.fetchPostItemsAdvance();
   }
 ```
+//selam ben muhammet korkma benimle olursun 
+// random sayı print eden kod
+  
 
 - ornek dosyalama name name/service name/model name/view_model name/view şeklinde içe doğru olacak şekilde yap
   -mvvm gibi vm klasörüne provider ekleyip orda kullan
