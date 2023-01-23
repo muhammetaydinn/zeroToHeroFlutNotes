@@ -1132,6 +1132,40 @@ https://www.youtube.com/watch?v=mr5suYiOnPg&list=PL1k5oWAuBhgXdw1BbxVGxxWRmkGB1C
   - spliti var singlewhere var , equalatable , bunları o class mmodelinde ypasan daha iyi bu komutları rty catch içine al
 - orElse ile default değer verilebilir
 
+
+
+- ``Core`` katmanında network isleminin ``manageri`` olmalı , localde ``cacheleme`` yapılacaksa burada yapılır , ?? işler viewmodelde yapılır. ?? 
+   - ``base`` yapısı olusturulur baseler saklanır
+   - ``constants`` olusturulur 
+   - ``init`` dosyası olur , burada ``tema`` yönetimi, ``notifier`` olur ``network`` katmanı olur , ``local manager`` olur yani uygulama ``init`` halindeyken yapılacaklar burada yapılır
+     - ``network``  - belki disari cikartabilirz
+     - ``theme``
+     - ``cache``
+   - ``componentler`` ``atomic widgetler`` olur bu sürekli kullanılanlar olur 
+   - ornek klasoru bu klasoru içinde mvvm 
+     - ``model``
+     - ``view``
+     - ``viewmodel``
+     - ``service``
+- ``View`` katmanında ``feature`` base dediğimiz olay baslio. 
+  - ``authanticaiton`` klasörü açarsın
+    - ``login`` klasörü açarsın
+    - ``register`` klasörü açarsın
+    - ``splash`` klasörü açarsın
+    - ``onbord``  klasörü açarsın bunlar auth sırasınca olması gerekenlerdir auth bitince home klasörü gelir
+  - ``home`` olustur artık içerim
+    - ``profile`` klasörü açarsın
+    - ``tab`` klasörü açarsın
+- ``lib`` dışında da bir de ``test`` yazılır aslında app db ile konusmamalı businnesi backend yapmalı
+  - burada da ``feature base`` yapısı olur
+    - feature 
+    - mock modele dokunmadan işlem yapabilmek için
+
+- navigation için direkt core ya da auto_route kullanabilirsin
+- Future.microtask initstate biter bitmez yapılacak işlemler için kullanılır
+-BloC, Localization, Moduler, Snippet Fastlane etc.Picker, Vexana, Runner düşüncesi ve detaylarıNavigation package, Mobx, ImagePicker
+
+
 ## KESIN KULLANIRIM
 
 - post get şeylerini try catch içine al
