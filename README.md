@@ -1175,9 +1175,13 @@ https://www.youtube.com/watch?v=mr5suYiOnPg&list=PL1k5oWAuBhgXdw1BbxVGxxWRmkGB1C
 - nullable filan dümeninde ! kulanma ? ?? kullan
 - Bir yere istek attığında devtooldan istek atılan şeye bak sağ tık ile curl bash kopyala postman da yapıştır direkt import edersin.
 
+
 ## EKSIKLERIM - Calismam gerekener
 
 -servis işlemleri ve ardından kullanılan oop
 
 - mixin ve extension konuları,
 - todo benzeri bir app ile shared pref tam ogren secure de olsun jwt de dene
+
+
+- DevTools işine yarar
